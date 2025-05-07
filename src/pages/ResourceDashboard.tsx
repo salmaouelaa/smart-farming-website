@@ -16,49 +16,49 @@ import {
   LineChart,
   Line
 } from 'recharts';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { Droplet, Leaf } from 'lucide-react';
 
-// Mock data for resource allocation
+// Mock data for resource allocation - removed labor
 const resourceAllocationData = [
-  { stage: 'Seeding', water: 20, fertilizer: 15, labor: 10 },
-  { stage: 'Vegetative', water: 35, fertilizer: 25, labor: 15 },
-  { stage: 'Flowering', water: 40, fertilizer: 30, labor: 20 },
-  { stage: 'Fruiting', water: 30, fertilizer: 20, labor: 25 },
-  { stage: 'Maturity', water: 15, fertilizer: 10, labor: 15 },
+  { stage: 'Seeding', water: 20, fertilizer: 15 },
+  { stage: 'Vegetative', water: 35, fertilizer: 25 },
+  { stage: 'Flowering', water: 40, fertilizer: 30 },
+  { stage: 'Fruiting', water: 30, fertilizer: 20 },
+  { stage: 'Maturity', water: 15, fertilizer: 10 },
 ];
 
-// Mock data for resource distribution
+// Mock data for resource distribution - removed labor
 const resourceDistributionData = [
-  { name: 'Water', value: 40 },
-  { name: 'Fertilizer', value: 30 },
-  { name: 'Labor', value: 20 },
-  { name: 'Equipment', value: 10 },
+  { name: 'Water', value: 60 },
+  { name: 'Fertilizer', value: 40 },
 ];
 
-// Mock data for crop comparison
+// Mock data for crop comparison - updated for more accurate representation
 const cropComparisonData = [
-  { crop: 'Corn', water: 35, fertilizer: 25, yield: 80 },
-  { crop: 'Wheat', water: 25, fertilizer: 20, yield: 60 },
-  { crop: 'Soybeans', water: 30, fertilizer: 15, yield: 70 },
-  { crop: 'Cotton', water: 40, fertilizer: 30, yield: 85 },
+  { crop: 'Corn', water: 35, fertilizer: 25, yield: 85 },
+  { crop: 'Wheat', water: 25, fertilizer: 20, yield: 68 },
+  { crop: 'Soybeans', water: 30, fertilizer: 15, yield: 72 },
+  { crop: 'Cotton', water: 40, fertilizer: 30, yield: 88 },
 ];
 
-// Mock data for yield prediction
+// Mock data for yield prediction - made more accurate
 const yieldPredictionData = [
   { month: 'Jan', actual: 0, predicted: 0 },
   { month: 'Feb', actual: 0, predicted: 0 },
   { month: 'Mar', actual: 5, predicted: 5 },
-  { month: 'Apr', actual: 15, predicted: 15 },
-  { month: 'May', actual: 25, predicted: 25 },
-  { month: 'Jun', actual: 40, predicted: 40 },
-  { month: 'Jul', actual: 65, predicted: 70 },
-  { month: 'Aug', actual: 80, predicted: 90 },
-  { month: 'Sep', actual: null, predicted: 95 },
-  { month: 'Oct', actual: null, predicted: 100 },
-  { month: 'Nov', actual: null, predicted: 95 },
+  { month: 'Apr', actual: 15, predicted: 16 },
+  { month: 'May', actual: 25, predicted: 27 },
+  { month: 'Jun', actual: 40, predicted: 42 },
+  { month: 'Jul', actual: 65, predicted: 68 },
+  { month: 'Aug', actual: 80, predicted: 85 },
+  { month: 'Sep', actual: null, predicted: 92 },
+  { month: 'Oct', actual: null, predicted: 98 },
+  { month: 'Nov', actual: null, predicted: 94 },
   { month: 'Dec', actual: null, predicted: 90 },
 ];
 
-const COLORS = ['#4CAF50', '#03A9F4', '#FFC107', '#795548'];
+const COLORS = ['#0EA5E9', '#4CAF50'];
 
 const ResourceDashboard = () => {
   return (
@@ -84,10 +84,15 @@ const ResourceDashboard = () => {
             <Card>
               <CardHeader>
                 <CardTitle>Resource Distribution</CardTitle>
-                <CardDescription>Optimal allocation of resources for your farm</CardDescription>
+                <CardDescription>Optimal allocation of water and fertilizer resources for your farm</CardDescription>
               </CardHeader>
               <CardContent className="h-80">
-                <ResponsiveContainer width="100%" height="100%">
+                <ChartContainer 
+                  config={{
+                    water: { label: "Water", color: "#0EA5E9" },
+                    fertilizer: { label: "Fertilizer", color: "#4CAF50" },
+                  }}
+                >
                   <PieChart>
                     <Pie
                       data={resourceDistributionData}
@@ -103,20 +108,25 @@ const ResourceDashboard = () => {
                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                       ))}
                     </Pie>
-                    <Tooltip />
+                    <ChartTooltip content={<ChartTooltipContent />} />
                     <Legend />
                   </PieChart>
-                </ResponsiveContainer>
+                </ChartContainer>
               </CardContent>
             </Card>
             
             <Card>
               <CardHeader>
                 <CardTitle>Resource Allocation by Growth Stage</CardTitle>
-                <CardDescription>How resources are distributed across growth stages</CardDescription>
+                <CardDescription>How water and fertilizer are distributed across growth stages</CardDescription>
               </CardHeader>
               <CardContent className="h-80">
-                <ResponsiveContainer width="100%" height="100%">
+                <ChartContainer
+                  config={{
+                    water: { label: "Water", color: "#0EA5E9" },
+                    fertilizer: { label: "Fertilizer", color: "#4CAF50" },
+                  }}
+                >
                   <BarChart
                     data={resourceAllocationData}
                     margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
@@ -124,13 +134,12 @@ const ResourceDashboard = () => {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="stage" />
                     <YAxis />
-                    <Tooltip formatter={(value) => `${value} units`} />
+                    <ChartTooltip content={<ChartTooltipContent />} />
                     <Legend />
-                    <Bar dataKey="water" fill="#03A9F4" name="Water" />
+                    <Bar dataKey="water" fill="#0EA5E9" name="Water" />
                     <Bar dataKey="fertilizer" fill="#4CAF50" name="Fertilizer" />
-                    <Bar dataKey="labor" fill="#FFC107" name="Labor" />
                   </BarChart>
-                </ResponsiveContainer>
+                </ChartContainer>
               </CardContent>
             </Card>
           </div>
@@ -144,7 +153,12 @@ const ResourceDashboard = () => {
               <CardDescription>Resource usage optimization by growth stage</CardDescription>
             </CardHeader>
             <CardContent className="h-96">
-              <ResponsiveContainer width="100%" height="100%">
+              <ChartContainer
+                config={{
+                  water: { label: "Water", icon: Droplet, color: "#0EA5E9" },
+                  fertilizer: { label: "Fertilizer", icon: Leaf, color: "#4CAF50" },
+                }}
+              >
                 <BarChart
                   data={resourceAllocationData}
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
@@ -153,13 +167,12 @@ const ResourceDashboard = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="stage" scale="point" padding={{ left: 50, right: 50 }} />
                   <YAxis />
-                  <Tooltip formatter={(value) => `${value} units`} />
+                  <ChartTooltip content={<ChartTooltipContent />} />
                   <Legend />
-                  <Bar dataKey="water" fill="#03A9F4" name="Water" />
+                  <Bar dataKey="water" fill="#0EA5E9" name="Water" />
                   <Bar dataKey="fertilizer" fill="#4CAF50" name="Fertilizer" />
-                  <Bar dataKey="labor" fill="#FFC107" name="Labor" />
                 </BarChart>
-              </ResponsiveContainer>
+              </ChartContainer>
             </CardContent>
           </Card>
         </TabsContent>
@@ -172,22 +185,28 @@ const ResourceDashboard = () => {
               <CardDescription>Compare resource usage and yield across different crops</CardDescription>
             </CardHeader>
             <CardContent className="h-96">
-              <ResponsiveContainer width="100%" height="100%">
+              <ChartContainer
+                config={{
+                  water: { label: "Water", icon: Droplet, color: "#0EA5E9" },
+                  fertilizer: { label: "Fertilizer", icon: Leaf, color: "#4CAF50" },
+                  yield: { label: "Yield", color: "#FFC107" },
+                }}
+              >
                 <BarChart
                   data={cropComparisonData}
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="crop" />
-                  <YAxis yAxisId="left" orientation="left" stroke="#03A9F4" />
-                  <YAxis yAxisId="right" orientation="right" stroke="#4CAF50" />
-                  <Tooltip />
+                  <YAxis yAxisId="left" orientation="left" stroke="#0EA5E9" />
+                  <YAxis yAxisId="right" orientation="right" stroke="#FFC107" />
+                  <ChartTooltip content={<ChartTooltipContent />} />
                   <Legend />
-                  <Bar yAxisId="left" dataKey="water" fill="#03A9F4" name="Water (units)" />
+                  <Bar yAxisId="left" dataKey="water" fill="#0EA5E9" name="Water (units)" />
                   <Bar yAxisId="left" dataKey="fertilizer" fill="#4CAF50" name="Fertilizer (units)" />
                   <Bar yAxisId="right" dataKey="yield" fill="#FFC107" name="Yield (%)" />
                 </BarChart>
-              </ResponsiveContainer>
+              </ChartContainer>
             </CardContent>
           </Card>
         </TabsContent>
@@ -200,7 +219,12 @@ const ResourceDashboard = () => {
               <CardDescription>Actual vs. predicted yield throughout the growing season</CardDescription>
             </CardHeader>
             <CardContent className="h-96">
-              <ResponsiveContainer width="100%" height="100%">
+              <ChartContainer
+                config={{
+                  actual: { label: "Actual Yield", color: "#4CAF50" },
+                  predicted: { label: "Predicted Yield", color: "#0EA5E9" },
+                }}
+              >
                 <LineChart
                   data={yieldPredictionData}
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
@@ -208,7 +232,7 @@ const ResourceDashboard = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="month" />
                   <YAxis />
-                  <Tooltip formatter={(value) => `${value}%`} />
+                  <ChartTooltip content={<ChartTooltipContent />} />
                   <Legend />
                   <Line 
                     type="monotone" 
@@ -221,13 +245,13 @@ const ResourceDashboard = () => {
                   <Line 
                     type="monotone" 
                     dataKey="predicted" 
-                    stroke="#03A9F4" 
+                    stroke="#0EA5E9" 
                     strokeWidth={2} 
                     strokeDasharray="5 5" 
                     name="Predicted Yield"
                   />
                 </LineChart>
-              </ResponsiveContainer>
+              </ChartContainer>
             </CardContent>
           </Card>
         </TabsContent>

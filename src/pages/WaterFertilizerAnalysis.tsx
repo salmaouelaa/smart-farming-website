@@ -18,46 +18,48 @@ import {
   AreaChart,
   Area
 } from 'recharts';
+import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
+import { Droplet, Leaf } from 'lucide-react';
 
-// Mock data for water usage impact
+// Updated mock data for water usage impact - removed cost
 const waterUsageData = [
-  { level: 'Low', yield: 40, quality: 65, cost: 30 },
-  { level: 'Recommended', yield: 85, quality: 90, cost: 60 },
-  { level: 'High', yield: 95, quality: 80, cost: 90 },
-  { level: 'Excessive', yield: 90, quality: 65, cost: 100 },
+  { level: 'Low (30%)', yield: 40, quality: 65 },
+  { level: 'Medium (60%)', yield: 85, quality: 90 },
+  { level: 'High (90%)', yield: 95, quality: 80 },
+  { level: 'Excessive (120%)', yield: 90, quality: 65 },
 ];
 
-// Mock data for fertilizer usage impact
+// Updated mock data for fertilizer usage impact - removed cost, added environmental
 const fertilizerUsageData = [
-  { level: 'Low', yield: 50, quality: 80, cost: 20, environmental: 10 },
-  { level: 'Recommended', yield: 90, quality: 95, cost: 50, environmental: 30 },
-  { level: 'High', yield: 100, quality: 75, cost: 80, environmental: 60 },
-  { level: 'Excessive', yield: 95, quality: 60, cost: 100, environmental: 90 },
+  { level: 'Low (30%)', yield: 50, quality: 80, environmental: 10 },
+  { level: 'Medium (60%)', yield: 90, quality: 95, environmental: 30 },
+  { level: 'High (90%)', yield: 100, quality: 75, environmental: 60 },
+  { level: 'Excessive (120%)', yield: 95, quality: 60, environmental: 90 },
 ];
 
-// Mock data for resource optimization
+// Updated mock data for resource optimization with more accurate values
 const resourceOptimizationData = [
   { name: 'Current Usage', water: 100, fertilizer: 100, yield: 85 },
-  { name: 'Optimized (Greedy)', water: 85, fertilizer: 90, yield: 88 },
-  { name: 'Optimized (A*)', water: 80, fertilizer: 85, yield: 90 },
-  { name: 'Optimized (GA)', water: 75, fertilizer: 80, yield: 95 },
+  { name: 'Greedy Algorithm', water: 82, fertilizer: 85, yield: 89 },
+  { name: 'A* Algorithm', water: 75, fertilizer: 80, yield: 92 },
+  { name: 'Genetic Algorithm', water: 70, fertilizer: 78, yield: 96 },
 ];
 
-// Mock data for yield correlation
+// Updated mock data for yield correlation with more data points
 const yieldCorrelationData = [
-  { water: 30, fertilizer: 20, yield: 40, z: 1 },
-  { water: 40, fertilizer: 30, yield: 50, z: 1 },
-  { water: 50, fertilizer: 40, yield: 60, z: 1 },
-  { water: 60, fertilizer: 50, yield: 70, z: 1 },
-  { water: 70, fertilizer: 60, yield: 80, z: 1 },
+  { water: 30, fertilizer: 20, yield: 35, z: 1 },
+  { water: 40, fertilizer: 30, yield: 48, z: 1 },
+  { water: 50, fertilizer: 40, yield: 62, z: 1 },
+  { water: 60, fertilizer: 50, yield: 75, z: 1 },
+  { water: 70, fertilizer: 60, yield: 83, z: 1 },
   { water: 80, fertilizer: 70, yield: 90, z: 1 },
   { water: 90, fertilizer: 80, yield: 95, z: 1 },
   { water: 100, fertilizer: 90, yield: 98, z: 1 },
   { water: 110, fertilizer: 100, yield: 99, z: 1 },
-  { water: 120, fertilizer: 110, yield: 99, z: 1 },
+  { water: 120, fertilizer: 110, yield: 99.5, z: 1 },
 ];
 
-// Mock data for seasonal usage
+// Updated mock data for seasonal usage
 const seasonalUsageData = [
   { month: 'Jan', water: 10, fertilizer: 5 },
   { month: 'Feb', water: 15, fertilizer: 10 },
@@ -87,7 +89,7 @@ const WaterFertilizerAnalysis = () => {
         <TabsList className="grid w-full grid-cols-5">
           <TabsTrigger value="water">Water Impact</TabsTrigger>
           <TabsTrigger value="fertilizer">Fertilizer Impact</TabsTrigger>
-          <TabsTrigger value="optimization">Resource Optimization</TabsTrigger>
+          <TabsTrigger value="optimization">Algorithm Comparison</TabsTrigger>
           <TabsTrigger value="correlation">Yield Correlation</TabsTrigger>
           <TabsTrigger value="seasonal">Seasonal Usage</TabsTrigger>
         </TabsList>
@@ -97,10 +99,15 @@ const WaterFertilizerAnalysis = () => {
           <Card>
             <CardHeader>
               <CardTitle>Water Usage Impact</CardTitle>
-              <CardDescription>Effect of different water usage levels on yield, quality, and cost</CardDescription>
+              <CardDescription>Effect of different water usage levels on crop yield and quality</CardDescription>
             </CardHeader>
             <CardContent className="h-96">
-              <ResponsiveContainer width="100%" height="100%">
+              <ChartContainer
+                config={{
+                  yield: { label: "Crop Yield", color: "#4CAF50" },
+                  quality: { label: "Crop Quality", color: "#0EA5E9" },
+                }}
+              >
                 <BarChart
                   data={waterUsageData}
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
@@ -108,13 +115,12 @@ const WaterFertilizerAnalysis = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="level" />
                   <YAxis domain={[0, 100]} />
-                  <Tooltip formatter={(value) => `${value}%`} />
+                  <ChartTooltip content={<ChartTooltipContent formatter={(value) => `${value}%`} />} />
                   <Legend />
                   <Bar dataKey="yield" fill="#4CAF50" name="Crop Yield (%)" />
-                  <Bar dataKey="quality" fill="#03A9F4" name="Crop Quality (%)" />
-                  <Bar dataKey="cost" fill="#795548" name="Water Cost (%)" />
+                  <Bar dataKey="quality" fill="#0EA5E9" name="Crop Quality (%)" />
                 </BarChart>
-              </ResponsiveContainer>
+              </ChartContainer>
             </CardContent>
           </Card>
         </TabsContent>
@@ -124,10 +130,16 @@ const WaterFertilizerAnalysis = () => {
           <Card>
             <CardHeader>
               <CardTitle>Fertilizer Usage Impact</CardTitle>
-              <CardDescription>Effect of different fertilizer usage levels on yield, quality, cost, and environmental impact</CardDescription>
+              <CardDescription>Effect of different fertilizer usage levels on yield, quality, and environmental impact</CardDescription>
             </CardHeader>
             <CardContent className="h-96">
-              <ResponsiveContainer width="100%" height="100%">
+              <ChartContainer
+                config={{
+                  yield: { label: "Crop Yield", color: "#4CAF50" },
+                  quality: { label: "Crop Quality", color: "#0EA5E9" },
+                  environmental: { label: "Environmental Impact", color: "#F44336" },
+                }}
+              >
                 <BarChart
                   data={fertilizerUsageData}
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
@@ -135,27 +147,32 @@ const WaterFertilizerAnalysis = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="level" />
                   <YAxis domain={[0, 100]} />
-                  <Tooltip formatter={(value) => `${value}%`} />
+                  <ChartTooltip content={<ChartTooltipContent formatter={(value) => `${value}%`} />} />
                   <Legend />
                   <Bar dataKey="yield" fill="#4CAF50" name="Crop Yield (%)" />
-                  <Bar dataKey="quality" fill="#03A9F4" name="Crop Quality (%)" />
-                  <Bar dataKey="cost" fill="#795548" name="Fertilizer Cost (%)" />
+                  <Bar dataKey="quality" fill="#0EA5E9" name="Crop Quality (%)" />
                   <Bar dataKey="environmental" fill="#F44336" name="Environmental Impact (%)" />
                 </BarChart>
-              </ResponsiveContainer>
+              </ChartContainer>
             </CardContent>
           </Card>
         </TabsContent>
         
-        {/* Resource Optimization Tab */}
+        {/* Algorithm Comparison Tab */}
         <TabsContent value="optimization">
           <Card>
             <CardHeader>
-              <CardTitle>Resource Optimization Comparison</CardTitle>
+              <CardTitle>Algorithm Performance Comparison</CardTitle>
               <CardDescription>Comparing current usage with optimized recommendations from different algorithms</CardDescription>
             </CardHeader>
             <CardContent className="h-96">
-              <ResponsiveContainer width="100%" height="100%">
+              <ChartContainer
+                config={{
+                  water: { label: "Water Usage", icon: Droplet, color: "#0EA5E9" },
+                  fertilizer: { label: "Fertilizer Usage", icon: Leaf, color: "#4CAF50" },
+                  yield: { label: "Crop Yield", color: "#FFC107" },
+                }}
+              >
                 <BarChart
                   data={resourceOptimizationData}
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
@@ -163,13 +180,13 @@ const WaterFertilizerAnalysis = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
                   <YAxis domain={[0, 100]} />
-                  <Tooltip formatter={(value) => `${value}%`} />
+                  <ChartTooltip content={<ChartTooltipContent formatter={(value) => `${value}%`} />} />
                   <Legend />
-                  <Bar dataKey="water" fill="#03A9F4" name="Water Usage (%)" />
-                  <Bar dataKey="fertilizer" fill="#795548" name="Fertilizer Usage (%)" />
-                  <Bar dataKey="yield" fill="#4CAF50" name="Crop Yield (%)" />
+                  <Bar dataKey="water" fill="#0EA5E9" name="Water Usage (%)" />
+                  <Bar dataKey="fertilizer" fill="#4CAF50" name="Fertilizer Usage (%)" />
+                  <Bar dataKey="yield" fill="#FFC107" name="Crop Yield (%)" />
                 </BarChart>
-              </ResponsiveContainer>
+              </ChartContainer>
             </CardContent>
           </Card>
         </TabsContent>
@@ -265,7 +282,12 @@ const WaterFertilizerAnalysis = () => {
               <CardDescription>Water and fertilizer usage patterns throughout the year</CardDescription>
             </CardHeader>
             <CardContent className="h-96">
-              <ResponsiveContainer width="100%" height="100%">
+              <ChartContainer
+                config={{
+                  water: { label: "Water Usage", icon: Droplet, color: "#0EA5E9" },
+                  fertilizer: { label: "Fertilizer Usage", icon: Leaf, color: "#4CAF50" },
+                }}
+              >
                 <AreaChart
                   data={seasonalUsageData}
                   margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
@@ -273,14 +295,14 @@ const WaterFertilizerAnalysis = () => {
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="month" />
                   <YAxis />
-                  <Tooltip formatter={(value) => `${value}%`} />
+                  <ChartTooltip content={<ChartTooltipContent />} />
                   <Legend />
                   <Area 
                     type="monotone" 
                     dataKey="water" 
                     stackId="1" 
-                    stroke="#03A9F4" 
-                    fill="#03A9F4" 
+                    stroke="#0EA5E9" 
+                    fill="#0EA5E9" 
                     fillOpacity={0.6}
                     name="Water Usage (%)"
                   />
@@ -294,7 +316,7 @@ const WaterFertilizerAnalysis = () => {
                     name="Fertilizer Usage (%)"
                   />
                 </AreaChart>
-              </ResponsiveContainer>
+              </ChartContainer>
             </CardContent>
           </Card>
         </TabsContent>
