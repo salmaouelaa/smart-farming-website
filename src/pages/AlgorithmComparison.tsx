@@ -19,45 +19,45 @@ import {
   Radar
 } from 'recharts';
 
-// Mock data for algorithm comparison
+// Updated data for algorithm optimization performance
 const algorithmPerformanceData = [
-  { name: 'Small Farm', greedy: 80, aStar: 85, ga: 90 },
-  { name: 'Medium Farm', greedy: 70, aStar: 82, ga: 88 },
-  { name: 'Large Farm', greedy: 65, aStar: 80, ga: 90 },
-  { name: 'Complex Terrain', greedy: 60, aStar: 78, ga: 85 },
-  { name: 'Multiple Crops', greedy: 65, aStar: 75, ga: 87 },
+  { name: 'Wheat', greedy: 82, aStar: 88, ga: 93 },
+  { name: 'Corn', greedy: 76, aStar: 85, ga: 91 },
+  { name: 'Soybean', greedy: 79, aStar: 86, ga: 92 },
+  { name: 'Rice', greedy: 74, aStar: 83, ga: 90 },
+  { name: 'Potato', greedy: 78, aStar: 86, ga: 91 },
 ];
 
-// Mock data for execution time
+// Updated execution time data
 const executionTimeData = [
-  { name: 'Small Farm', greedy: 1.2, aStar: 2.5, ga: 4.8 },
-  { name: 'Medium Farm', greedy: 2.3, aStar: 4.7, ga: 8.2 },
-  { name: 'Large Farm', greedy: 4.5, aStar: 9.3, ga: 15.1 },
-  { name: 'Complex Terrain', greedy: 3.8, aStar: 8.9, ga: 14.3 },
-  { name: 'Multiple Crops', greedy: 5.6, aStar: 10.2, ga: 16.5 },
+  { name: 'Wheat', greedy: 1.2, aStar: 2.5, ga: 4.8 },
+  { name: 'Corn', greedy: 1.5, aStar: 3.2, ga: 5.1 },
+  { name: 'Soybean', greedy: 1.4, aStar: 2.9, ga: 5.0 },
+  { name: 'Rice', greedy: 1.6, aStar: 3.4, ga: 5.3 },
+  { name: 'Potato', greedy: 1.3, aStar: 2.8, ga: 4.9 },
 ];
 
-// Mock data for algorithm characteristics
+// Algorithm characteristics data
 const algorithmCharacteristicsData = [
-  { subject: 'Efficiency', greedy: 60, aStar: 80, ga: 90 },
-  { subject: 'Accuracy', greedy: 65, aStar: 85, ga: 90 },
-  { subject: 'Adaptability', greedy: 50, aStar: 75, ga: 95 },
-  { subject: 'Scalability', greedy: 80, aStar: 70, ga: 85 },
-  { subject: 'Robustness', greedy: 55, aStar: 80, ga: 85 },
+  { subject: 'Water Efficiency', greedy: 75, aStar: 85, ga: 92 },
+  { subject: 'Fertilizer Efficiency', greedy: 72, aStar: 84, ga: 90 },
+  { subject: 'Adaptability to Constraints', greedy: 65, aStar: 80, ga: 95 },
+  { subject: 'Yield Optimization', greedy: 78, aStar: 86, ga: 93 },
+  { subject: 'Resource Balance', greedy: 70, aStar: 82, ga: 91 },
 ];
 
-// Mock data for optimization over iterations
+// Resource utilization efficiency over iterations
 const optimizationData = [
-  { iteration: 1, greedy: 60, aStar: 65, ga: 50 },
-  { iteration: 2, greedy: 60, aStar: 70, ga: 60 },
-  { iteration: 3, greedy: 60, aStar: 75, ga: 68 },
-  { iteration: 4, greedy: 60, aStar: 78, ga: 75 },
-  { iteration: 5, greedy: 60, aStar: 80, ga: 80 },
-  { iteration: 6, greedy: 60, aStar: 80, ga: 83 },
-  { iteration: 7, greedy: 60, aStar: 80, ga: 85 },
-  { iteration: 8, greedy: 60, aStar: 80, ga: 87 },
-  { iteration: 9, greedy: 60, aStar: 80, ga: 89 },
-  { iteration: 10, greedy: 60, aStar: 80, ga: 90 },
+  { iteration: 1, greedy: 70, aStar: 72, ga: 65 },
+  { iteration: 2, greedy: 70, aStar: 76, ga: 73 },
+  { iteration: 3, greedy: 70, aStar: 79, ga: 78 },
+  { iteration: 4, greedy: 70, aStar: 81, ga: 82 },
+  { iteration: 5, greedy: 70, aStar: 83, ga: 85 },
+  { iteration: 6, greedy: 70, aStar: 84, ga: 87 },
+  { iteration: 7, greedy: 70, aStar: 85, ga: 89 },
+  { iteration: 8, greedy: 70, aStar: 85, ga: 90 },
+  { iteration: 9, greedy: 70, aStar: 85, ga: 92 },
+  { iteration: 10, greedy: 70, aStar: 85, ga: 93 },
 ];
 
 const AlgorithmComparison = () => {
@@ -76,21 +76,21 @@ const AlgorithmComparison = () => {
           <div>
             <h3 className="text-lg font-medium text-farm-green mb-2">Greedy Algorithm</h3>
             <p className="text-gray-600">
-              A simple, fast algorithm that makes locally optimal choices at each step. While quick to execute, it may not find the globally optimal solution for complex resource allocation problems.
+              Makes locally optimal choices at each step without considering the global impact. While fast, it may miss the optimal resource allocation for complex farming scenarios requiring balanced water and fertilizer distribution.
             </p>
           </div>
           
           <div>
             <h3 className="text-lg font-medium text-farm-blue mb-2">A* Algorithm</h3>
             <p className="text-gray-600">
-              A more sophisticated pathfinding algorithm that can be adapted for resource optimization. It uses heuristics to find efficient paths to optimal solutions, balancing speed and accuracy.
+              Uses heuristics to find efficient paths toward optimal solutions, balancing speed and accuracy. It considers multiple factors simultaneously to improve resource allocation efficiency across different crops.
             </p>
           </div>
           
           <div>
             <h3 className="text-lg font-medium text-farm-yellow mb-2">Genetic Algorithm (GA)</h3>
             <p className="text-gray-600">
-              An evolutionary algorithm inspired by natural selection. It can find near-optimal solutions for complex problems by simulating evolution across generations of potential solutions.
+              Simulates evolution to find near-optimal solutions for complex problems. It excels at discovering resource allocation patterns that maximize crop yield while minimizing waste, adapting to various constraints and crop requirements.
             </p>
           </div>
         </div>
@@ -108,8 +108,8 @@ const AlgorithmComparison = () => {
         <TabsContent value="performance">
           <Card>
             <CardHeader>
-              <CardTitle>Algorithm Performance Comparison</CardTitle>
-              <CardDescription>Efficiency score across different farm scenarios (higher is better)</CardDescription>
+              <CardTitle>Resource Allocation Optimization Performance</CardTitle>
+              <CardDescription>Efficiency score across different crops (higher is better)</CardDescription>
             </CardHeader>
             <CardContent className="h-96">
               <ResponsiveContainer width="100%" height="100%">
@@ -119,7 +119,7 @@ const AlgorithmComparison = () => {
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="name" />
-                  <YAxis domain={[0, 100]} label={{ value: 'Efficiency Score (%)', angle: -90, position: 'insideLeft' }} />
+                  <YAxis domain={[60, 100]} label={{ value: 'Optimization Efficiency (%)', angle: -90, position: 'insideLeft' }} />
                   <Tooltip formatter={(value) => `${value}%`} />
                   <Legend />
                   <Bar dataKey="greedy" fill="#795548" name="Greedy Algorithm" />
@@ -136,7 +136,7 @@ const AlgorithmComparison = () => {
           <Card>
             <CardHeader>
               <CardTitle>Algorithm Execution Time</CardTitle>
-              <CardDescription>Processing time required for different scenarios (lower is better)</CardDescription>
+              <CardDescription>Processing time required for different crops (lower is better)</CardDescription>
             </CardHeader>
             <CardContent className="h-96">
               <ResponsiveContainer width="100%" height="100%">
@@ -162,8 +162,8 @@ const AlgorithmComparison = () => {
         <TabsContent value="characteristics">
           <Card>
             <CardHeader>
-              <CardTitle>Algorithm Characteristics</CardTitle>
-              <CardDescription>Comparison of algorithm strengths across key metrics</CardDescription>
+              <CardTitle>Resource Optimization Characteristics</CardTitle>
+              <CardDescription>Comparison of algorithm strengths across key resource optimization metrics</CardDescription>
             </CardHeader>
             <CardContent className="h-96">
               <ResponsiveContainer width="100%" height="100%">
@@ -186,8 +186,8 @@ const AlgorithmComparison = () => {
         <TabsContent value="optimization">
           <Card>
             <CardHeader>
-              <CardTitle>Optimization Over Iterations</CardTitle>
-              <CardDescription>How solution quality improves with more processing time/iterations</CardDescription>
+              <CardTitle>Resource Utilization Efficiency Over Iterations</CardTitle>
+              <CardDescription>How solution quality improves with more processing iterations</CardDescription>
             </CardHeader>
             <CardContent className="h-96">
               <ResponsiveContainer width="100%" height="100%">
@@ -197,7 +197,7 @@ const AlgorithmComparison = () => {
                 >
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="iteration" />
-                  <YAxis domain={[0, 100]} label={{ value: 'Solution Quality (%)', angle: -90, position: 'insideLeft' }} />
+                  <YAxis domain={[60, 100]} label={{ value: 'Resource Utilization Efficiency (%)', angle: -90, position: 'insideLeft' }} />
                   <Tooltip formatter={(value) => `${value}%`} />
                   <Legend />
                   <Line type="monotone" dataKey="greedy" stroke="#795548" name="Greedy Algorithm" strokeWidth={2} />
