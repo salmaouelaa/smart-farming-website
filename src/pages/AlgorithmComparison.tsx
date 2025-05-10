@@ -19,45 +19,45 @@ import {
   Radar
 } from 'recharts';
 
-// Updated data for algorithm optimization performance
+// Updated data for algorithm optimization performance based on provided specifications
 const algorithmPerformanceData = [
-  { name: 'Wheat', greedy: 82, aStar: 88, ga: 93 },
-  { name: 'Corn', greedy: 76, aStar: 85, ga: 91 },
-  { name: 'Soybean', greedy: 79, aStar: 86, ga: 92 },
-  { name: 'Rice', greedy: 74, aStar: 83, ga: 90 },
-  { name: 'Potato', greedy: 78, aStar: 86, ga: 91 },
+  { name: 'Wheat', greedy: 78, aStar: 86, ga: 94 },
+  { name: 'Corn', greedy: 75, aStar: 87, ga: 93 },
+  { name: 'Soybean', greedy: 77, aStar: 88, ga: 95 },
+  { name: 'Rice', greedy: 73, aStar: 85, ga: 92 },
+  { name: 'Potato', greedy: 76, aStar: 87, ga: 94 },
 ];
 
-// Updated execution time data
+// Updated execution time data based on provided specifications
 const executionTimeData = [
-  { name: 'Wheat', greedy: 1.2, aStar: 2.5, ga: 4.8 },
-  { name: 'Corn', greedy: 1.5, aStar: 3.2, ga: 5.1 },
-  { name: 'Soybean', greedy: 1.4, aStar: 2.9, ga: 5.0 },
-  { name: 'Rice', greedy: 1.6, aStar: 3.4, ga: 5.3 },
-  { name: 'Potato', greedy: 1.3, aStar: 2.8, ga: 4.9 },
+  { name: 'Wheat', greedy: 1.8, aStar: 4.5, ga: 6.8 },
+  { name: 'Corn', greedy: 2.1, aStar: 5.2, ga: 7.1 },
+  { name: 'Soybean', greedy: 1.9, aStar: 4.8, ga: 7.0 },
+  { name: 'Rice', greedy: 2.2, aStar: 5.4, ga: 7.3 },
+  { name: 'Potato', greedy: 1.7, aStar: 4.6, ga: 6.9 },
 ];
 
-// Algorithm characteristics data
+// Updated algorithm characteristics data based on provided specifications
 const algorithmCharacteristicsData = [
-  { subject: 'Water Efficiency', greedy: 75, aStar: 85, ga: 92 },
-  { subject: 'Fertilizer Efficiency', greedy: 72, aStar: 84, ga: 90 },
-  { subject: 'Adaptability to Constraints', greedy: 65, aStar: 80, ga: 95 },
-  { subject: 'Yield Optimization', greedy: 78, aStar: 86, ga: 93 },
-  { subject: 'Resource Balance', greedy: 70, aStar: 82, ga: 91 },
+  { subject: 'Water Efficiency', greedy: 75, aStar: 87, ga: 93 },
+  { subject: 'Fertilizer Efficiency', greedy: 72, aStar: 85, ga: 92 },
+  { subject: 'Adaptability to Constraints', greedy: 65, aStar: 83, ga: 95 },
+  { subject: 'Yield Optimization', greedy: 78, aStar: 86, ga: 94 },
+  { subject: 'Resource Balance', greedy: 70, aStar: 84, ga: 91 },
 ];
 
-// Resource utilization efficiency over iterations
+// Updated resource utilization efficiency over iterations based on provided specifications
 const optimizationData = [
   { iteration: 1, greedy: 70, aStar: 72, ga: 65 },
-  { iteration: 2, greedy: 70, aStar: 76, ga: 73 },
-  { iteration: 3, greedy: 70, aStar: 79, ga: 78 },
-  { iteration: 4, greedy: 70, aStar: 81, ga: 82 },
-  { iteration: 5, greedy: 70, aStar: 83, ga: 85 },
-  { iteration: 6, greedy: 70, aStar: 84, ga: 87 },
-  { iteration: 7, greedy: 70, aStar: 85, ga: 89 },
-  { iteration: 8, greedy: 70, aStar: 85, ga: 90 },
-  { iteration: 9, greedy: 70, aStar: 85, ga: 92 },
-  { iteration: 10, greedy: 70, aStar: 85, ga: 93 },
+  { iteration: 2, greedy: 71, aStar: 76, ga: 73 },
+  { iteration: 3, greedy: 72, aStar: 79, ga: 78 },
+  { iteration: 4, greedy: 72, aStar: 81, ga: 82 },
+  { iteration: 5, greedy: 73, aStar: 83, ga: 85 },
+  { iteration: 6, greedy: 73, aStar: 84, ga: 87 },
+  { iteration: 7, greedy: 74, aStar: 84, ga: 89 },
+  { iteration: 8, greedy: 74, aStar: 85, ga: 91 },
+  { iteration: 9, greedy: 75, aStar: 85, ga: 93 },
+  { iteration: 10, greedy: 75, aStar: 85, ga: 95 },
 ];
 
 const AlgorithmComparison = () => {
@@ -76,21 +76,31 @@ const AlgorithmComparison = () => {
           <div>
             <h3 className="text-lg font-medium text-farm-green mb-2">Greedy Algorithm</h3>
             <p className="text-gray-600">
-              Makes locally optimal choices at each step without considering the global impact. While fast, it may miss the optimal resource allocation for complex farming scenarios requiring balanced water and fertilizer distribution.
+              Makes locally optimal choices at each step without considering the global impact. 
+              While fast in execution, it produces suboptimal resource allocation solutions
+              for complex farming scenarios. It doesn't adapt well to multiple interacting variables
+              and constraints, resulting in less efficient water and fertilizer distribution.
             </p>
           </div>
           
           <div>
             <h3 className="text-lg font-medium text-farm-blue mb-2">A* Algorithm</h3>
             <p className="text-gray-600">
-              Uses heuristics to find efficient paths toward optimal solutions, balancing speed and accuracy. It considers multiple factors simultaneously to improve resource allocation efficiency across different crops.
+              Uses heuristics to find efficient paths toward optimal solutions, balancing speed and accuracy.
+              It evaluates multiple factors based on resource allocation cost, considering various constraints
+              and conditions. A* shows improved efficiency over iterations and handles complex scenarios
+              better than greedy approaches, though with increased computational time.
             </p>
           </div>
           
           <div>
             <h3 className="text-lg font-medium text-farm-yellow mb-2">Genetic Algorithm (GA)</h3>
             <p className="text-gray-600">
-              Simulates evolution to find near-optimal solutions for complex problems. It excels at discovering resource allocation patterns that maximize crop yield while minimizing waste, adapting to various constraints and crop requirements.
+              Simulates evolutionary processes to find near-optimal solutions for complex problems.
+              GAs evolve better resource strategies over generations, adapting well to various resource
+              allocation challenges. While requiring more computational time, they excel at balancing
+              multiple objectives and constraints, producing the highest efficiency in resource utilization
+              and yield optimization.
             </p>
           </div>
         </div>
